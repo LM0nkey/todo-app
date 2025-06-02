@@ -6,6 +6,8 @@ const User = require('../models/User');
 
 // 👉 Registro
 router.post('/register', async (req, res) => {
+  console.log("BODY RECIBIDO:", req.body); // 👈 DEBUG: Verificar que llega el JSON
+
   const { username, password } = req.body;
 
   // Verificar si el usuario ya existe
@@ -24,6 +26,8 @@ router.post('/register', async (req, res) => {
 
 // 👉 Login
 router.post('/login', async (req, res) => {
+  console.log("BODY RECIBIDO:", req.body); // 👈 También lo puedes poner aquí
+
   const { username, password } = req.body;
 
   // Verificar existencia del usuario
