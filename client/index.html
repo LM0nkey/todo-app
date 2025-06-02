@@ -7,14 +7,30 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Mis Tareas</h1>
-  <form id="taskForm">
-    <input type="text" id="taskInput" placeholder="Nueva tarea..." required />
-    <button type="submit">Agregar</button>
-  </form>
-  <ul id="taskList"></ul>
+  <h1>Gestor de Tareas</h1>
+
+  <button id="logoutBtn" style="display:none;">Cerrar sesión</button>
+
+
+  <div id="loginSection">
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Usuario" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+    <p id="loginError" style="color: red;"></p>
+  </div>
+
+  <div id="taskSection" style="display:none;">
+    <form id="taskForm">
+      <input type="text" id="taskInput" placeholder="Nueva tarea..." required />
+      <button type="submit">Agregar</button>
+    </form>
+    <ul id="taskList"></ul>
+  </div>
 
   <script src="main.js"></script>
+
 </body>
 </html>
 

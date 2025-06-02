@@ -1,46 +1,31 @@
 const express = require('express');
-const fs = require('fs');
 const cors = require('cors');
+const mongoose = require('mongoose');
+
 const app = express();
 const PORT = 3000;
 
+// Middleware base
 app.use(cors());
 app.use(express.json());
 
-const DATA_FILE = './tasks.json';
+// Conexión a MongoDB
+mongoose.connect('mongodb://localhost:27017/todo-app')
+  .then(() => console.log("✅ Conectado a MongoDB"))
+  .catch(err => console.error("❌ Error al conectar:", err));
 
-// Leer tareas desde archivo
-function loadTasks() {
-  if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
-  const data = fs.readFileSync(DATA_FILE);
-  return JSON.parse(data);
-}
+// Importar rutas
+const authRoutes = require('./routes/auth');
+const taskRoutes = require('./routes/tasks');
+const authMiddleware = require('./middleware/authMiddleware');
 
-// Guardar tareas en archivo
-function saveTasks(tasks) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(tasks, null, 2));
-}
+// Rutas públicas
+app.use('/api/auth', authRoutes);
 
-app.get('/api/tasks', (req, res) => {
-  const tasks = loadTasks();
-  res.json(tasks);
-});
+// Rutas protegidas (requieren login)
+app.use('/api/tasks', authMiddleware, taskRoutes);
 
-app.post('/api/tasks', (req, res) => {
-  const tasks = loadTasks();
-  const newTask = { id: Date.now(), ...req.body };
-  tasks.push(newTask);
-  saveTasks(tasks);
-  res.status(201).json(newTask);
-});
-
-app.delete('/api/tasks/:id', (req, res) => {
-  let tasks = loadTasks();
-  tasks = tasks.filter(task => task.id != req.params.id);
-  saveTasks(tasks);
-  res.status(204).send();
-});
-
+// Iniciar servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
