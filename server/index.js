@@ -16,7 +16,7 @@ console.log("MONGO_URI:", process.env.MONGO_URI);
 
 
 // Conexión a MongoDB
-mongoose.connect("mongodb+srv://admin:Donweas21%2E@cluster0.jajofoe.mongodb.net/todo-app?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Conectado a MongoDB"))
   .catch(err => console.error("❌ Error al conectar:", err));
 
