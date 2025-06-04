@@ -19,7 +19,7 @@ Este es un pequeño proyecto full-stack para gestionar tareas. Fue creado como p
 ## 📦 Cómo ejecutarlo
 
 1. Clonar el proyecto:
-git clone https://github.com/TU_USUARIO/todo-app.git
+git clone https://github.com/LM0nkey/todo-app.git
 cd todo-app/server
 
 2. Instalar dependencias:
