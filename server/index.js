@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 const PORT = 3000;
+const path = require('path');
 
 // Middleware base
 app.use(cors());
@@ -18,6 +19,15 @@ console.log("MONGO_URI:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Conectado a MongoDB"))
   .catch(err => console.error("❌ Error al conectar:", err));
+
+  
+// Servir archivos estáticos desde /client
+app.use(express.static(path.join(__dirname, '../client')));
+// Redireccionar cualquier ruta desconocida al index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+});
+
 
 // Importar rutas
 const authRoutes = require('./routes/auth');
