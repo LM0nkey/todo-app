@@ -34,14 +34,15 @@ app.use('/api/auth', authRoutes);
 // Rutas protegidas (requieren login)
 app.use('/api/tasks', authMiddleware, taskRoutes);
 
-// Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
-
 // Servir archivos estáticos desde /client
 app.use(express.static(path.join(__dirname, '../client')));
 // Redireccionar cualquier ruta desconocida al index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
 });
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
