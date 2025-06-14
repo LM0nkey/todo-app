@@ -20,14 +20,6 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Conectado a MongoDB"))
   .catch(err => console.error("❌ Error al conectar:", err));
 
-  
-// Servir archivos estáticos desde /client
-app.use(express.static(path.join(__dirname, '../client')));
-// Redireccionar cualquier ruta desconocida al index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/index.html'));
-});
-
 
 // Importar rutas
 const authRoutes = require('./routes/auth');
@@ -45,4 +37,11 @@ app.use('/api/tasks', authMiddleware, taskRoutes);
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+// Servir archivos estáticos desde /client
+app.use(express.static(path.join(__dirname, '../client')));
+// Redireccionar cualquier ruta desconocida al index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
 });
