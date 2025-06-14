@@ -10,7 +10,6 @@ app.use(cors());
 app.use(express.json());
 
 
-
 require('dotenv').config();
 console.log("MONGO_URI:", process.env.MONGO_URI);
 
@@ -24,9 +23,11 @@ mongoose.connect(process.env.MONGO_URI)
 const authRoutes = require('./routes/auth');
 const taskRoutes = require('./routes/tasks');
 const authMiddleware = require('./middleware/authMiddleware');
+const clientRoutes = require('./routes/clients');
 
 // Rutas públicas
 app.use('/api/auth', authRoutes);
+
 
 // Rutas protegidas (requieren login)
 app.use('/api/tasks', authMiddleware, taskRoutes);
